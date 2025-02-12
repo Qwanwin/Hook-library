@@ -1,3 +1,5 @@
+## Deploy in aide or android studio 
+
 ## Let's discuss each part of the code that I created:
 
 ## 1. Header Files and Basic Definitions:
