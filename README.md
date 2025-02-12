@@ -21,25 +21,30 @@ This defines the base address and size of the target library to be hooked.
 4. Example Hook Function:
 void* hook_memcpy(char* dest, const char* src, size_t size) {
     // This function hooks standard memcpy with additions security check:
-    // - Checks the calling function     // - Validate the buffer size     // - Null pointer check
+    // - Checks the calling function
+   // - Validate the buffer size
+  // - Null pointer check
 }
-5. Example of a Hook with Return Value:
+6. Example of a Hook with Return Value:
 __int64 __fastcall sub_588C344(__int64 a1) {
     // Simple hook that always returns the value 4
     return 4LL;
 }
-6. Hook use Original Function:
+7. Hook use Original Function:
 int (*osub_B32DE)(int a1, unsigned char *a2, size_t a3);
 int hsub_B32DE(int a1, unsigned char *a2, size_t a3) {
-    // Hook that allows calling the original function     // Only process if buffer size is 0x16 or 0x32
+    // Hook that allows calling the original function
+   // Only process if buffer size is 0x16 or 0x32
 }
-7. Main Thread:
+9. Main Thread:
 void * Qwan_thread(void *) {
-// Thread waiting for the target library to load     // Then apply the defined hooks
+// Thread waiting for the target library to load
+// Then apply the defined hooks
 }
-8. Constructor:
+11. Constructor:
 __attribute__((constructor)) void mainload() {
-// This function is called when the library is loaded     // Create a thread to run the hooking process
+// This function is called when the library is loaded
+// Create a thread to run the hooking process
 }
 
 #example how to run hook lib using
