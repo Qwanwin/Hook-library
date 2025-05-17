@@ -5,9 +5,6 @@ A lightweight hooking library for intercepting native functions and adding custo
 ## 📋 Table of Contents
 - [Overview](#overview)
 - [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
 
