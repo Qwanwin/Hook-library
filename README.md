@@ -1,57 +1,98 @@
-## Deploy in aide or android studio 
+# Hook Library
 
-## Let's discuss each part of the code that I created:
+A lightweight hooking library for intercepting native functions and adding custom logic.
 
-## 1. Header Files and Basic Definitions:
-#include <various_headers>
+## 📋 Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
->Header files include standard C++ functions, thread handling, memory management, dll
-## 2. Data Type Definition:
-#define __int8 char
-#define __int16 short 
-#define __int32 int
-#define __int64 long long
+## 🔍 Overview
 
->Defines data types for compatibility with the Game Guardian format
+Hook Library is designed to intercept native functions like memcpy, allowing you to:
+- Add custom validation and logic to function calls
+- Debug and modify library behavior without source code changes
+- Monitor and control native function execution
 
+## ⭐ Features
 
-## 3. Variabel Global:
+### Core Components
+```c
+// Essential Data Types
+typedef signed char        __int8;
+typedef signed short      __int16;
+typedef signed int        __int32;
+typedef signed long long  __int64;
+
+// Global Variables
 uintptr_t Mylib;
 DWORD libMylibBase = 0;
 DWORD libMylibAlloc = 0;
 unsigned int libMylibSize = 0x48B49;
+```
 
->This defines the base address and size of the target library to be hooked.
+### Key Features
+- Native function interception
+- Buffer validation
+- Pointer safety checks
+- Logging capabilities
+- Cross-architecture compatibility
 
-## 4. Example Hook Function:
-void* hook_memcpy(char* dest, const char* src, size_t size) {
-   This function hooks standard memcpy with additions security check and
-      Checks the calling function
-   > - Validate the buffer size
-  > - Null pointer check
+## 📥 Installation
+
+### Prerequisites
+- Android Studio or Aide
+- NDK support
+- Gradle build 
+
+
+### Basic Implementation
+```c
+// Initialize hook system
+init_hook();
+
+// Register your hooks
+register_hook("memcpy", hook_memcpy);
+
+// Enable hooking
+enable_hooks();
+```
+
+### Example Hook
+```c
+void* hook_memcpy(void* dest, const void* src, size_t count) {
+    // Validation logic
+    if (!dest || !src) {
+        return NULL;
+    }
+    
+    // Original function call
+    return orig_memcpy(dest, src, count);
 }
-## 5. Example of a Hook with Return Value:
-__int64 __fastcall sub_588C344(__int64 a1) {
-    Simple hook that always returns the value 4
-    return 4LL;
-}
-## 6. Hook use Original Function:
-int (*osub_B32DE)(int a1, unsigned char *a2, size_t a3);
-int hsub_B32DE(int a1, unsigned char *a2, size_t a3) {
-    > Hook that allows calling the original function
-   > Only process if buffer size is 0x16 or 0x32
-}
-## 7. Main Thread:
-void * Qwan_thread(void *) {
-> Thread waiting for the target library to load> Then apply the defined hooks
+```
 
-## 8. Constructor:
-__attribute__((constructor)) void mainload() {
-> This function is called when the library is loaded
-> Create a thread to run the hooking process
-}
 
-## example how to run hook lib using method static constructor:
+## 🤝 Contributing
 
-    const-string v0, "Mylib"
-    invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+Made with  by [Qwanwin](https://github.com/Qwanwin)
+
+## 🔗 Links
+- [Repository](https://github.com/Qwanwin/Hook-library)
+- [Issues](https://github.com/Qwanwin/Hook-library/issues)
